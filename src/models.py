@@ -1,11 +1,13 @@
 import os
 import sys
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Column, ForeignKey, Integer, String, Enum
 from sqlalchemy.orm import relationship, declarative_base
 from sqlalchemy import create_engine
 from eralchemy2 import render_er
 
 Base = declarative_base()
+
+'''
 
 class Person(Base):
     __tablename__ = 'person'
@@ -24,9 +26,44 @@ class Address(Base):
     post_code = Column(String(250), nullable=False)
     person_id = Column(Integer, ForeignKey('person.id'))
     person = relationship(Person)
-
-    def to_dict(self):
+        def to_dict(self):
         return {}
+'''
+
+class Follower(Base):
+    __tablename__ = 'follower'
+    id = Column(Integer, primary_key=True)
+    user_from_id = Column(Integer)
+    user_to_id = Column(Integer)
+
+class User(Base):
+    __tablename__ = 'user'
+    id = Column(Integer, primary_key=True)
+    username = Column(String(15))
+    firstname = Column(String(15))
+    lastname = Column(String(15))
+    email = Column(String(15))
+
+class Comment(Base):
+    __tablename__ = 'comment'
+    id = Column(Integer, primary_key=True)
+    comment_text = Column(String(15))
+    author_id = Column(Integer)
+    post_id = Column(Integer)
+
+class Post(Base):
+    __tablename__ = 'post'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer)
+
+class Media(Base):
+    __tablename__ = 'media'
+    id = Column(Integer, primary_key=True)
+    type = Column(Enum)
+    url = Column(String(15))
+    post_id = Column(Integer)
+
+
 
 ## Draw from SQLAlchemy base
 try:
