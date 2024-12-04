@@ -33,13 +33,13 @@ class Address(Base):
 class Follower(Base):
     __tablename__ = 'follower'
     id = Column(Integer, primary_key=True)
-    user_from_id = Column(Integer)
-    user_to_id = Column(Integer)
+    user_from_id = Column(Integer, ForeignKey('user.id'), nullable=False)
+    user_to_id = Column(Integer, ForeignKey('user.id'), nullable=False)
 
 class User(Base):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
-    username = Column(String(15))
+    username = Column(String(15), unique=True)
     firstname = Column(String(15))
     lastname = Column(String(15))
     email = Column(String(15))
